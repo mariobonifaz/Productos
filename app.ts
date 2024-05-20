@@ -4,11 +4,11 @@ import bodyParser from 'body-parser';
 import './Database/Sequelize';
 
 import { ProductController } from "./task/Infraestructure/controllers/ProductsController";
-import { PostgresProductsRepository } from "./task/Infraestructure/repositories/PostgresOrdenesRepository";
+import { PostgresProductsRepository } from "./task/Infraestructure/repositories/PostgresProductsRepository";
 import { ProductService } from "./task/application/services/user-cases/ProductService";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 
@@ -20,6 +20,9 @@ const productController = new ProductController(productService);
 app.post('/api/v1/productos', (req, res) => productController.createProduct(req, res));
 app.get('/api/v1/productos', (req, res) => productController.getAllProducts(req, res));
 app.delete('/api/v1/productos/:id',(req, res) => productController.deleteProductById(req,res));
+
+// Nuevo endpoint para actualizar el stock
+app.post('/api/v2/productos/update-stock', (req, res) => productController.updateStock(req, res));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

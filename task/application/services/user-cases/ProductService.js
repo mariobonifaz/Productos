@@ -45,5 +45,16 @@ class ProductService {
             }
         });
     }
+    // Método para actualizar el stock
+    updateStock(productId, quantity) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.productsRepositoy.updateProductStock(productId, quantity);
+            }
+            catch (error) {
+                throw new Error(`Error udeiting stock product: ${error.message}`);
+            }
+        });
+    }
 }
 exports.ProductService = ProductService;

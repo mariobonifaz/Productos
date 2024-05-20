@@ -57,5 +57,16 @@ class PostgresProductsRepository {
             }
         });
     }
+    // Implementación de updateProductStock
+    updateProductStock(productId, quantity) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const product = yield ProductModel_1.default.findByPk(productId);
+            if (!product) {
+                throw new Error('Product not found');
+            }
+            product.stock -= quantity;
+            yield product.save();
+        });
+    }
 }
 exports.PostgresProductsRepository = PostgresProductsRepository;

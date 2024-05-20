@@ -38,4 +38,14 @@ export class PostgresProductsRepository implements ProductsRepository {
             throw new Error(`Error deleting product: ${(error as Error).message}`);
         }
     }
+
+    // Implementación de updateProductStock
+    async updateProductStock(productId: number, quantity: number): Promise<void> {
+        const product = await ProductModel.findByPk(productId);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+        product.stock -= quantity;
+        await product.save();
+    }
 }

@@ -61,5 +61,23 @@ class ProductController {
             }
         });
     }
+    // Método para actualizar el stock
+    updateStock(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { productId, quantity } = req.body;
+                yield this.productService.updateStock(productId, quantity);
+                res.status(200).json({ message: 'Stock updated successfully' });
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    res.status(400).json({ error: err.message });
+                }
+                else {
+                    res.status(500).json({ error: "Internal server error" });
+                }
+            }
+        });
+    }
 }
 exports.ProductController = ProductController;

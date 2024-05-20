@@ -4,4 +4,5 @@ export interface ProductsRepository {
     createProduct(product: Product): Promise<Product>;
     getAllProducts(): Promise<Product[]>;
     deleteProductById(id: string): Promise<void>;
+    updateProductStock(productId: number, quantity: number): Promise<void>;  // Nuevo método
 }

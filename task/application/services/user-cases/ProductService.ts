@@ -30,4 +30,13 @@ export class ProductService {
             throw new Error(`Error deleting product: ${(error as Error).message}`);
         }
     }
+
+        // Método para actualizar el stock
+    async updateStock(productId: number, quantity: number): Promise<void> {
+        try {
+        await this.productsRepositoy.updateProductStock(productId, quantity);
+        } catch(error) {
+            throw new Error(`Error udeiting stock product: ${(error as Error).message}`);
+        }
+    }
 }

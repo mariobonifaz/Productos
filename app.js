@@ -8,18 +8,20 @@ const body_parser_1 = __importDefault(require("body-parser"));
 // Importar la configuración de Sequelize antes de cualquier controlador o servicio que utilice los modelos
 require("./Database/Sequelize");
 const ProductsController_1 = require("./task/Infraestructure/controllers/ProductsController");
-const PostgresOrdenesRepository_1 = require("./task/Infraestructure/repositories/PostgresOrdenesRepository");
+const PostgresProductsRepository_1 = require("./task/Infraestructure/repositories/PostgresProductsRepository");
 const ProductService_1 = require("./task/application/services/user-cases/ProductService");
 const app = (0, express_1.default)();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.use(body_parser_1.default.json());
-const productsRepository = new PostgresOrdenesRepository_1.PostgresProductsRepository();
+const productsRepository = new PostgresProductsRepository_1.PostgresProductsRepository();
 const productService = new ProductService_1.ProductService(productsRepository);
 const productController = new ProductsController_1.ProductController(productService);
 // Definición de rutas para Products
 app.post('/api/v1/productos', (req, res) => productController.createProduct(req, res));
 app.get('/api/v1/productos', (req, res) => productController.getAllProducts(req, res));
 app.delete('/api/v1/productos/:id', (req, res) => productController.deleteProductById(req, res));
+// Nuevo endpoint para actualizar el stock
+app.post('/api/v2/productos/update-stock', (req, res) => productController.updateStock(req, res));
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

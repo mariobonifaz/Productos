@@ -42,4 +42,19 @@ export class ProductController {
             }
         }
     }
+
+    // Método para actualizar el stock
+    async updateStock(req: Request, res: Response) {
+        try {
+            const { productId, quantity } = req.body;
+            await this.productService.updateStock(productId, quantity);
+            res.status(200).json({ message: 'Stock updated successfully' });
+        } catch (err) {
+            if (err instanceof Error) {
+                res.status(400).json({ error: err.message });
+            } else {
+                res.status(500).json({ error: "Internal server error" });
+            }
+        }
+    }
 }
